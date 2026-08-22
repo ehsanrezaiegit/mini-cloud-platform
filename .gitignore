@@ -1,0 +1,20 @@
+# Terraform / OpenTofu
+terraform/.terraform/
+terraform/*.tfstate
+
+terraform/*.tfstate.backup
+terraform/.terraform.lock.hcl
+terraform/*.tfvars
+
+# Ansible
+ansible/*.retry
+*.log
+
+
+# Kubernetes
+kubeconfig
+*.kubeconfig
+
+
+# OS
+.DS_Store
