@@ -1,3 +1,3 @@
 # mini-cloud-platform 🚀
 
-پلتفرم محلی Kubernetes با OpenTofu + Ansible + Helm + ArgoCD
+public platform Kubernetes with OpenTofu + Ansible + Helm + ArgoCD
