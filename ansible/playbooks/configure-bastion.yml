@@ -1,0 +1,50 @@
+---
+- name: پیکربندی سرور بستیون به‌عنوان ماشین مدیریت کلاستر
+  hosts: bastion
+  become: true
+
+  tasks:
+    - name: نصب پیش‌نیازهای پایه
+      apt:
+        name:
+          - curl
+          - ca-certificates
+          - gnupg
+        state: present
+        update_cache: true
+
+    - name: دانلود و نصب kubectl
+      get_url:
+        url: "https://dl.k8s.io/release/v1.31.0/bin/linux/amd64/kubectl"
+        dest: /usr/local/bin/kubectl
+        mode: '0755'
+
+    - name: دانلود و نصب Helm
+      shell: |
+        curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+      args:
+        creates: /usr/local/bin/helm
+
+    - name: ساخت پوشه برای اسکریپت‌های بک‌آپ
+      file:
+        path: /home/devops/scripts
+        state: directory
+        owner: devops
+        group: devops
+        mode: '0755'
+
+    - name: قرار دادن اسکریپت بک‌آپ ساده (نمونه‌ای از cron مرحله ۱)
+      copy:
+        dest: /home/devops/scripts/backup-note.sh
+        owner: devops
+        mode: '0755'
+        content: |
+          #!/bin/bash
+          echo "$(date): وضعیت کلاستر بررسی شد" >> /home/devops/scripts/backup.log
+
+    - name: فعال کردن cron برای اسکریپت بک‌آپ (هر ساعت)
+      cron:
+        name: "cluster health snapshot"
+        user: devops
+        minute: "0"
+        job: "/home/devops/scripts/backup-note.sh"

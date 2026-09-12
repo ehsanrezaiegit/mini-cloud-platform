@@ -1,0 +1,18 @@
+---
+- name: تنظیم و سخت‌سازی نودهای کلاستر kind
+  hosts: kind_nodes
+
+  tasks:
+    - name: نصب ابزارهای تشخیصی پایه
+      raw: apt-get update && apt-get install -y curl htop procps iproute2
+
+    - name: تنظیم vm.max_map_count (برای workloadهای آینده مثل Elasticsearch)
+      raw: sysctl -w vm.max_map_count=262144
+
+    - name: تأیید نسخه هسته و منابع نود
+      raw: uname -r && free -h
+      register: node_info
+
+    - name: نمایش اطلاعات نود
+      debug:
+        var: node_info.stdout_lines

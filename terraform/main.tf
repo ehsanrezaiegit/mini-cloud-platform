@@ -92,6 +92,9 @@ resource "docker_image" "bastion" {
   build {
     context = "${path.module}/../ansible/bastion-image"
   }
+  triggers = {
+    dockerfile_hash = filesha256("${path.module}/../ansible/bastion-image/Dockerfile")
+  }
 }
 
 resource "docker_container" "bastion" {
