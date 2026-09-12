@@ -1,0 +1,35 @@
+---
+title: "Model Routing Becomes the New Cloud Cost Discipline"
+description: "As teams ship more AI features, choosing the right model for each request is turning into a core platform responsibility."
+date: "2026-07-24"
+category: "Infrastructure"
+tags:
+  - models
+  - routing
+  - cost
+coverImage: "/covers/model-routing.png"
+readingTime: "4 min read"
+author: "CortexWire Desk"
+---
+
+AI product teams are discovering a familiar cloud lesson: usage grows faster than forecasts once a feature becomes useful. The difference is that model costs are tied not only to traffic, but also to input length, output length, latency requirements, and the quality target for each task.
+
+That is pushing model routing from a nice optimization into platform infrastructure. A single application might need a fast small model for classification, a stronger model for complex reasoning, an embedding model for retrieval, and a fallback path when quality drops below threshold.
+
+## Routing is more than price shopping
+
+The simplest router sends easy tasks to cheaper models and hard tasks to stronger ones. Real systems need more nuance. They need to understand user tier, privacy policy, required latency, tool availability, regional constraints, and historical success rates.
+
+The best routers behave like control planes. They collect traces, measure outputs, compare alternatives, and let teams change policy without rewriting product code. This matters because the model market is still moving quickly. A provider can release a faster model, change pricing, or improve context handling, and the application should benefit without a risky migration.
+
+## Evaluation is the unlock
+
+Routing without evaluation is guesswork. Teams need task-specific test sets, production sampling, and human review for high-value workflows. A lower-cost model may be excellent for extracting dates from invoices and poor at explaining a technical support incident. The reverse can also be true.
+
+The measurement stack needs to capture more than answer correctness. Refusal behavior, tone, citation quality, tool-call accuracy, and latency all affect whether a route is acceptable. Over time, those signals become the basis for automatic model selection.
+
+## The platform opportunity
+
+Cloud platforms won because they abstracted messy infrastructure choices behind APIs and policy controls. AI infrastructure is moving in the same direction. Product engineers want one interface for model calls, while platform teams want observability, spend limits, redaction, and compliance hooks.
+
+The winners will not be the teams that always choose the cheapest model. They will be the teams that make model selection observable and reversible. In an environment where quality, price, and capability change every quarter, flexibility is the durable advantage.

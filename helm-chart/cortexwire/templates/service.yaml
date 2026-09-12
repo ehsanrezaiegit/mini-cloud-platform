@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-cortexwire
+spec:
+  type: {{ .Values.service.type }}
+  selector:
+    app: cortexwire
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: 3000
+      nodePort: {{ .Values.service.nodePort }}

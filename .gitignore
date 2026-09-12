@@ -18,3 +18,12 @@ kubeconfig
 # OS
 .DS_Store
 terraform/kind-config.generated.yaml
+
+# Next.js app
+app/node_modules/
+app/.next/
+app/.content-collections/
+app/.tmp/
+app/test-results/
+app/tsconfig.tsbuildinfo
+app/debug.log

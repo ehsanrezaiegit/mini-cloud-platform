@@ -5,6 +5,10 @@ containerdConfigPatches:
 - |-
   [plugins."io.containerd.grpc.v1.cri".registry.mirrors."localhost:${registry_port}"]
     endpoint = ["http://kind-registry:5000"]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors."kind-registry:5000"]
+    endpoint = ["http://kind-registry:5000"]
+  [plugins."io.containerd.grpc.v1.cri".registry.configs."kind-registry:5000".tls]
+    insecure_skip_verify = true
 nodes:
 - role: control-plane
   extraPortMappings:
@@ -13,6 +17,9 @@ nodes:
     protocol: TCP
   - containerPort: 443
     hostPort: 443
+    protocol: TCP
+  - containerPort: 30080
+    hostPort: 30080
     protocol: TCP
 - role: worker
 - role: worker

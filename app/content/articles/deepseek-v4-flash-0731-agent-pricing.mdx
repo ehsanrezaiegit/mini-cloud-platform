@@ -1,0 +1,27 @@
+---
+title: "DeepSeek Just Made Frontier-Level Agents Cost Pennies"
+description: "V4-Flash-0731 jumped over 20 points on Terminal-Bench through re-post-training alone, undercutting Western frontier pricing by an order of magnitude without changing model size."
+date: "2026-08-01"
+category: "AI Strategy"
+tags:
+  - models
+  - deepseek
+  - pricing
+coverImage: "/covers/deepseek-v4-flash.png"
+readingTime: "4 min read"
+author: "CortexWire Desk"
+---
+
+DeepSeek pushed its V4-Flash API into public beta on July 31 with a release that is more interesting for what it didn't change than what it did. The model, V4-Flash-0731, keeps the exact same architecture and parameter count as April's preview build — DeepSeek's own changelog describes the update as a re-post-training pass, not a new model. What moved is capability, not scale.
+
+The jump is large by any standard. On Terminal-Bench 2.1, the benchmark most agent teams currently lean on for coding tasks, the score rose from 61.8 in the preview to 82.7 — enough to pass Z.AI's GLM-5.2 at 81.0 and close most of the distance to Claude Opus 4.8's 85.0. DeepSWE moved from 7.3 to 54.4. On several of DeepSeek's own agent evaluations, the smaller Flash model now beats the company's own V4-Pro preview outright.
+
+## Post-training is doing the work scale used to do
+
+Pricing did not move: cache-miss input stays at $0.14 per million tokens, output at $0.28, with cache hits dropping to roughly a quarter of a cent. Set next to Claude Sonnet 5 at $3 input and $15 output, or even GPT-5.6 Luna's newly discounted $0.20 and $1.20, the gap is not incremental. A team running $1,000 a month of Sonnet 5 traffic through an equivalent Flash-0731 workload would land somewhere around $47, before accounting for the roughly 2.3x faster output throughput DeepSeek is reporting.
+
+The timing is not an accident. The release landed one day after OpenAI cut GPT-5.6 Luna's price by 80 percent, a move already being read across the industry as a response to pressure from Chinese labs. DeepSeek didn't need to cut anything — its price was already below the new discounted rate — so the message of the release is less about price and more about how much capability that price now buys.
+
+## What to check before switching
+
+Independent reviewers have flagged two caveats worth carrying into any evaluation. DeepSeek's Terminal-Bench 2.1 score isn't directly comparable to older Terminal-Bench 2.0 numbers published for the April model, since the harness itself changed. And the agent benchmarks used an unreleased "minimal mode" version of DeepSeek's own test harness, which outside teams can't yet replicate exactly. Both are reasons to treat the chart as a strong signal to re-test against your own workload, not as a settled verdict against Western frontier models.

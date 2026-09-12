@@ -1,0 +1,9 @@
+node_modules
+.next
+.git
+.tmp
+test-results
+.content-collections
+*.log
+debug.log
+tsconfig.tsbuildinfo
