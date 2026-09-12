@@ -14,12 +14,10 @@ terraform {
 
 provider "docker" {}
 
-# ۱. شبکه‌ای که هم رجیستری و هم نودهای kind روش قرار می‌گیرن
 resource "docker_network" "kind" {
   name = "kind"
 }
 
-# ۲. کانتینر رجیستری خصوصی
 resource "docker_image" "registry" {
   name = "registry:2"
 }
@@ -39,7 +37,6 @@ resource "docker_container" "registry" {
   }
 }
 
-# ۳. فایل تنظیمات کلاستر رو از template می‌سازیم
 resource "local_file" "kind_config" {
   filename = "${path.module}/kind-config.generated.yaml"
   content = templatefile("${path.module}/kind-config.yaml.tftpl", {
@@ -48,7 +45,6 @@ resource "local_file" "kind_config" {
   })
 }
 
-# ۴. خود کلاستر kind (چون provider رسمی نداره، با local-exec می‌سازیمش)
 resource "null_resource" "kind_cluster" {
   depends_on = [docker_network.kind, docker_container.registry, local_file.kind_config]
 
@@ -67,7 +63,6 @@ resource "null_resource" "kind_cluster" {
   }
 }
 
-# ۵. به کلاستر می‌گیم رجیستری محلی رو بشناسه (استاندارد رسمی kind)
 resource "null_resource" "registry_configmap" {
   depends_on = [null_resource.kind_cluster]
 
@@ -89,5 +84,26 @@ resource "null_resource" "registry_configmap" {
           help: "https://kind.sigs.k8s.io/docs/user/local-registry/"
       EOK
     EOT
+  }
+}
+
+resource "docker_image" "bastion" {
+  name = "mini-cloud-bastion:latest"
+  build {
+    context = "${path.module}/../ansible/bastion-image"
+  }
+}
+
+resource "docker_container" "bastion" {
+  name  = "mini-cloud-bastion"
+  image = docker_image.bastion.image_id
+
+  ports {
+    internal = 22
+    external = 2222
+  }
+
+  networks_advanced {
+    name = docker_network.kind.name
   }
 }
